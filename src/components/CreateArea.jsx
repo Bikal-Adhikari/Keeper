@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
-const CreateArea = () => {
+const CreateArea = ({ getData }) => {
+  const [inputText, setInputText] = useState("");
+
+  const handelChange = (event) => {
+    const { value } = event.target;
+    setInputText(value);
+  };
+  const handelSubmit = (event) => {
+    event.preventDefault();
+    getData(inputText);
+    setInputText("");
+  };
   return (
     <div>
-      <form>
-        <input name="title" placeholder="Title" />
+      <form onSubmit={handelSubmit}>
+        <input
+          onChange={handelChange}
+          name="title"
+          placeholder="Title"
+          value={inputText}
+        />
         <textarea name="content" placeholder="Take a note..." rows="3" />
-        <button>Add</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );
