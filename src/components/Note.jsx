@@ -1,6 +1,6 @@
 import React from "react";
 
-function Note(props) {
+const Note = (props) => {
   return (
     <div className="note">
       <h1>{props.title}</h1>
@@ -8,6 +8,6 @@ function Note(props) {
       <button>DELETE</button>
     </div>
   );
-}
+};
 
 export default Note;
