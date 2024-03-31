@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 
-const CreateArea = ({ getData }) => {
-  const [inputText, setInputText] = useState("");
+const CreateArea = (props) => {
+  const [inputText, setInputText] = useState({
+    title: "",
+    content: "",
+  });
 
   const handelChange = (event) => {
-    const { value } = event.target;
-    setInputText(value);
+    const { name, value } = event.target;
+    setInputText((prevNote) => {
+      return {
+        ...prevNote,
+        [name]: value,
+      };
+    });
   };
   const handelSubmit = (event) => {
+    props.addData(inputText);
+    setInputText({
+      title: "",
+      content: "",
+    });
     event.preventDefault();
-    getData(inputText);
-    setInputText("");
   };
   return (
     <div>
@@ -19,9 +30,15 @@ const CreateArea = ({ getData }) => {
           onChange={handelChange}
           name="title"
           placeholder="Title"
-          value={inputText}
+          value={inputText.title}
         />
-        <textarea name="content" placeholder="Take a note..." rows="3" />
+        <textarea
+          onChange={handelChange}
+          name="content"
+          placeholder="Take a note..."
+          rows="3"
+          value={inputText.content}
+        />
         <button type="submit">Add</button>
       </form>
     </div>

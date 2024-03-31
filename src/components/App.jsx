@@ -5,15 +5,35 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 const App = () => {
-  const [list, setList] = useState([]);
-  const getData = (inputText) => {
-    setList(inputText);
+  const [lists, setLists] = useState([]);
+  const addData = (inputText) => {
+    setLists([...lists, inputText]);
   };
+
+  const deleteNote = (id) => {
+    setLists((prevNotes) => {
+      return prevNotes.filter((noteItem, index) => {
+        return index !== id;
+      });
+    });
+  };
+
   return (
     <div>
       <Header />
-      <CreateArea />
-      <Note key={1} title="Note title" content="Note content" />
+      <CreateArea addData={addData} />
+      {lists.map((noteItem, index) => {
+        return (
+          <Note
+            title={noteItem.title}
+            content={noteItem.content}
+            id={index}
+            key={index}
+            onDelete={deleteNote}
+          />
+        );
+      })}
+
       <Footer />
     </div>
   );
